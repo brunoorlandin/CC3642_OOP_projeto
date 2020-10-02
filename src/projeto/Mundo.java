@@ -32,7 +32,63 @@ public class Mundo {
             pessoasSaudavies.get(i).setY(y);
             mapa[pessoasSaudavies.get(i).getY()][pessoasSaudavies.get(i).getX()] = 3;
         }
+        pessoasDoentes.add(new PessoaDoente());
+            int x = rand.nextInt(60);
+            int y = rand.nextInt(30);
+            pessoasDoentes.get(0).setX(x);
+            pessoasDoentes.get(0).setY(y);
+            mapa[pessoasDoentes.get(0).getY()][pessoasDoentes.get(0).getX()] = 4;
     }
+    
+    public void movePessoas () {
+        for (int i = 0; i < this.pessoasSaudavies.size(); i++) {
+            PessoaSaudavel pessoaSaudavel = this.pessoasSaudavies.get(i);
+            mapa[pessoaSaudavel.getY()][pessoaSaudavel.getX()] = 0;
+            pessoaSaudavel.mover();
+            mapa[pessoaSaudavel.getY()][pessoaSaudavel.getX()] = 3;
+        }
+        
+        for (int i = 0; i < this.pessoasDoentes.size(); i++) {
+            PessoaDoente pessoaDoente = this.pessoasDoentes.get(i);
+            mapa[pessoaDoente.getY()][pessoaDoente.getX()] = 0;
+            pessoaDoente.mover();
+            mapa[pessoaDoente.getY()][pessoaDoente.getX()] = 4;
+        }
+    }
+    
+    public void verificaBordas () {
+        for (int i = 0; i < 1; i++){
+            for (int j = 0; j < mapa[i].length; j++) {
+                if (mapa[i][j] == 0) {
+                        mapa[i][j] = 1;
+            }
+        }
+    }
+        for (int i = 29; i < 30; i++){
+            for (int j = 0; j < mapa[i].length; j++) {
+                if (mapa[i][j] == 0) {
+                        mapa[i][j] = 1;
+            }
+        }
+    }
+        
+        for (int i = 0; i <  mapa.length; i++) {
+            for (int j = 0; j < 1; j++) {
+                if (mapa[i][j] == 0) {
+                        mapa[i][j] = 1;
+                }
+            }
+        }
+        
+        for (int i = 0; i <  mapa.length; i++) {
+            for (int j = 59; j < 60; j++) {
+                if (mapa[i][j] == 0) {
+                        mapa[i][j] = 1;
+                }
+            }
+        }
+}
+    
 
     //constructors
 
@@ -94,12 +150,18 @@ public class Mundo {
                      
                      System.out.print("\033[43m \033[0m");
                  }
+                 else if (mapa[i][j] == 4) {
+                     
+                     System.out.print("\033[41m \033[0m");
+                 }
                  else {
                      System.out.print("\033[40m \033[0m");
                  }
              }
              System.out.println("");
          }
+         movePessoas();
+         verificaBordas();
     }
     
     public void desenhaHospital() {
@@ -122,10 +184,13 @@ public class Mundo {
         }   
     }
     
+    /**
+     * 
+     */
     public void sep() {
         System.out.println("Mapa de infectados");
-        System.out.print("\033[43m \033[0m " + "Pessoas saudaveis: " + pessoasSaudavies.size());
-        System.out.print("  \033[41m \033[0m " + "Pessoas infectadas: ");
+        System.out.print("\033[43m \033[0m " + "Pessoas saudaveis: " + this.pessoasSaudavies.size());
+        System.out.print("  \033[41m \033[0m " + "Pessoas infectadas: " + this.pessoasDoentes.size());
         System.out.println("");
         System.out.println("\n================================================="
                 + "===========\n");

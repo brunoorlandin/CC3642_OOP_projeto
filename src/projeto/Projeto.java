@@ -28,7 +28,7 @@ public class Projeto {
         mundo.desenhaMundo();
         
         try{
-        Thread.sleep(400);
+        Thread.sleep(300);
         }
         catch (Exception e) {
         e.printStackTrace();
